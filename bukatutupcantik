@@ -1,0 +1,26 @@
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.ResetOnSpawn = false
+
+local imageButton = Instance.new("ImageButton")
+imageButton.Size = UDim2.new(0, 50, 0, 50)  -- Width and Height
+imageButton.Position = UDim2.new(0, 10, 1, -10)  -- Bottom-left corner
+imageButton.AnchorPoint = Vector2.new(0, 1)
+imageButton.Image = "rbxassetid://9614967008"  -- Replace with your off image asset ID
+
+local isOn = false
+local onImage = "rbxassetid://18246241610"  -- Replace with your on image asset ID
+local offImage = "rbxassetid://11330378074" -- Replace with your off image asset ID
+
+imageButton.MouseButton1Click:Connect(function()
+    isOn = not isOn
+    if isOn then
+        imageButton.Image = onImage
+        Library:ToggleUI()
+    else
+        imageButton.Image = offImage
+        Library:ToggleUI()
+    end
+end)
+
+imageButton.Parent = screenGui
