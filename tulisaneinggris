@@ -1,40 +1,46 @@
---[=[
- d888b  db    db d888888b      .d888b.      db      db    db  .d8b.  
-88' Y8b 88    88   `88'        VP  `8D      88      88    88 d8' `8b 
-88      88    88    88            odD'      88      88    88 88ooo88 
-88  ooo 88    88    88          .88'        88      88    88 88~~~88 
-88. ~8~ 88b  d88   .88.        j88.         88booo. 88b  d88 88   88    @uniquadev
- Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER 
-]=]
+-- Function to cycle through RGB colors
+local function rainbowColor(t)
+    local frequency = 2
+    local r = math.sin(frequency*t + 0) * 127 + 128
+    local g = math.sin(frequency*t + 2*math.pi/3) * 127 + 128
+    local b = math.sin(frequency*t + 4*math.pi/3) * 127 + 128
+    return Color3.fromRGB(r, g, b)
+end
 
--- Instances: 3 | Scripts: 0 | Modules: 0
-local G2L = {};
+-- Create GUI elements
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
--- StarterGui.ScreenGui
-G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Size = UDim2.new(0, 400, 0, 100)  -- Adjust size as needed
+TextLabel.Position = UDim2.new(0.7, -500, 0.2, 0.4)  -- Centered horizontally, 20% from the top
+TextLabel.Text = "This script is still new, so if there are any bugs, please report it to discord"
+TextLabel.TextColor3 = rainbowColor(tick())  -- Initial color based on time
+TextLabel.TextSize = 40  -- Adjust text size as needed
+TextLabel.Font = Enum.Font.SourceSansBold
+TextLabel.BackgroundTransparency = 1  -- Transparent background
+TextLabel.Parent = ScreenGui
 
+-- Function to update text color continuously
+local function updateTextColor()
+    while TextLabel.Parent do
+        local t = tick()  -- Get current time
+        TextLabel.TextColor3 = rainbowColor(t)  -- Update text color
+        wait(0.1)  -- Update color every 0.1 seconds (adjust as needed for smoothness)
+    end
+end
 
--- StarterGui.ScreenGui.gaybanget
-G2L["2"] = Instance.new("Frame", G2L["1"]);
-G2L["2"]["BorderSizePixel"] = 0;
-G2L["2"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["2"]["Style"] = Enum.FrameStyle.ChatBlue;
-G2L["2"]["Size"] = UDim2.new(0, 340, 0, 48);
-G2L["2"]["Position"] = UDim2.new(0.38383, 0, 0.11153, 0);
-G2L["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["2"]["Name"] = [[gaybanget]];
+-- Start updating text color
+spawn(updateTextColor)
 
--- StarterGui.ScreenGui.gaybanget.TextLabel
-G2L["3"] = Instance.new("TextLabel", G2L["2"]);
-G2L["3"]["BorderSizePixel"] = 0;
-G2L["3"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["3"]["TextSize"] = 15;
-G2L["3"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
-G2L["3"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["3"]["Size"] = UDim2.new(0, 347, 0, 47);
-G2L["3"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["3"]["Text"] = [[This script is still new, so if there are any bugs, please report it to discord]];
-G2L["3"]["Position"] = UDim2.new(-0.02277, 0, -0.67625, 0);
+-- Function to remove the text label after a delay
+local function removeTextLabel()
+    TextLabel:Destroy()
+end
 
+-- Adjust the duration as needed (in seconds)
+local duration = 10  -- Display for 10 seconds
 
-return G2L["1"], require;
+-- Remove the text label after
+wait(duration)
+removeTextLabel()
