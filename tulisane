@@ -39,7 +39,7 @@ local function removeTextLabel()
 end
 
 -- Adjust the duration as needed (in seconds)
-local duration = 5  -- Display for 10 seconds
+local duration = 3  -- Display for 10 seconds
 
 -- Remove the text label after
 wait(duration)
